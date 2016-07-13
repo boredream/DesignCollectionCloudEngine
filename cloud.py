@@ -2,16 +2,28 @@
 
 from leancloud import Engine
 from leancloud import LeanEngineError
-from main import scrapyexecute
 
 from app import app
+from main import spiderexecute
+from cloudspider import borespider
+from lxml import etree
 
 engine = Engine(app)
 
 
 @engine.define
-def scrapy(**params):
-    scrapyexecute.start_scrapy()
+def spider(**params):
+    borespider.execute()
+
+
+@engine.define
+def query(**params):
+    spiderexecute.query()
+
+
+@engine.define
+def add(**params):
+    spiderexecute.add()
 
 
 @engine.define
