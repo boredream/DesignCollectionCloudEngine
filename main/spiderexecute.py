@@ -4,6 +4,8 @@ import urllib2
 import json
 import sqlite3
 
+count = 50
+
 headers = {
     "X-LC-Id": "iaEH7ObIA4sPY8RSs3VCVXBg-gzGzoHsz",
     "X-LC-Key": "dXfhXIVyeWMN2czJkd4ehwzs",
@@ -14,7 +16,7 @@ url_batch = "https://api.leancloud.cn/1/batch"
 batch_request = {"requests": []}
 column_names = []
 
-conn = sqlite3.connect('..\\data.db')
+conn = sqlite3.connect('data.db')
 cursor = conn.cursor()
 cursor.execute('PRAGMA table_info("DATA")')
 for column in cursor.fetchall():
@@ -37,7 +39,7 @@ def add():
     """添加"""
 
     # 先从数据库中查询未提交到服务器的数据
-    print 'query no-add local datas'
+    print 'query local datas'
     cursor.execute("SELECT * FROM DATA WHERE isAdd = '0'")
     for item in cursor.fetchall():
         body = {}
@@ -50,8 +52,10 @@ def add():
             "body": body
         }
         batch_request['requests'].append(request)
+        if len(batch_request['requests']) == count:
+            break
 
-    if len(cursor.fetchall()) == 0:
+    if len(batch_request['requests']) == 0:
         print 'no data need add'
         return
 

@@ -6,14 +6,16 @@ from leancloud import LeanEngineError
 from app import app
 from main import spiderexecute
 from cloudspider import borespider
-from lxml import etree
 
 engine = Engine(app)
 
 
 @engine.define
 def spider(**params):
-    borespider.execute()
+    tag = params.get('tag')
+    if not tag:
+        tag = borespider.ui_china_tag
+    borespider.execute(tag)
 
 
 @engine.define
@@ -42,3 +44,7 @@ def before_todo_save(todo):
         raise LeanEngineError('内容不能为空')
     if len(content) >= 240:
         todo.set('content', content[:240] + ' ...')
+
+
+# if __name__ == '__main__':
+#     add()

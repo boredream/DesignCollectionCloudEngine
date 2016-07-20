@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>reslist</title>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+  </head>
+  <body>
+    <div id="container">
+      <h1>{{ title }}</h1>
+      <ul>
+        {% for data in datas %}
+        <li>{{ data.get('name') }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

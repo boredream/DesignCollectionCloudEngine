@@ -20,6 +20,11 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/reslist')
+def res_list():
+    return render_template('index.html')
+
+
 @app.route('/time')
 def time():
     return str(datetime.now())
