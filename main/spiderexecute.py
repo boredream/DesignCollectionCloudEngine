@@ -23,16 +23,18 @@ for column in cursor.fetchall():
     column_names.append(column[1])
 
 
-def query():
+def query(page=1):
     """查询"""
-    query_url = url + '?limit=10&skip=0'
+    limit = 20
+    skip = (page - 1) * limit
+    query_url = url + '?limit=%s&skip=%s' % (limit, skip)
 
     request = urllib2.Request(query_url, headers=headers)
     content = urllib2.urlopen(request).read()
 
     content_json = str(content)
     data = json.loads(content_json)
-    print data['results']
+    return data['results']
 
 
 def add():
@@ -75,4 +77,3 @@ def add():
 
         conn.commit()
         print 'update local data success'
-

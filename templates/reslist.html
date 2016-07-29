@@ -1,17 +1,35 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
+<head>
     <title>reslist</title>
     <link rel="stylesheet" href="/static/style.css" type="text/css">
-  </head>
-  <body>
-    <div id="container">
-      <h1>{{ title }}</h1>
-      <ul>
+</head>
+<body>
+<div id="container">
+    <ul>
         {% for data in datas %}
-        <li>{{ data.get('name') }}</li>
+            <li>
+                <div>
+                    <h4>{{ data.get('name') }}</h4>
+                </div>
+                <div>
+                    <a href={{ data.get('srcLink') }} title={{ data.get('name') }}>
+                        <img width="280" height="210" src={{ data.get('imgUrl') }}>
+                    </a>
+                </div>
+            </li>
         {% endfor %}
-      </ul>
-    </div>
-  </body>
+
+        <div>
+            <ul>
+                {% for index in range(1, page_links) %}
+                    <li>
+                        <a href={{ page_links[index] }}>{{ str(index) }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </ul>
+</div>
+</body>
 </html>

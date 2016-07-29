@@ -20,7 +20,9 @@ def spider(**params):
 
 @engine.define
 def query(**params):
-    spiderexecute.query()
+    if 'p' in params:
+        spiderexecute.query(params['p'])
+    spiderexecute.query(1)
 
 
 @engine.define
@@ -44,7 +46,6 @@ def before_todo_save(todo):
         raise LeanEngineError('内容不能为空')
     if len(content) >= 240:
         todo.set('content', content[:240] + ' ...')
-
 
 # if __name__ == '__main__':
 #     add()
